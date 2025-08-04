@@ -1,0 +1,13 @@
+{
+    "params" : {
+        "search_text": "iphone",
+        "per_page": 20,
+        "order": "newest_first",
+        "catalog_ids[]": 3661,
+        "page": 1
+    },
+    "telegram" : {
+        "token": "YOUR_TOKEN",
+        "chat_id": int
+    }
+}
