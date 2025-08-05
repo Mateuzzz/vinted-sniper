@@ -30,14 +30,17 @@ while True:
     else:
         try:
             for rekord in response.json()["items"]:
-                if (rekord["id"] not in items_handled):
+                if len(items_handled) < 20:
                     items_handled.append(rekord["id"])
-                    if len(items_handled) > 50:
-                        items_handled.pop(0)
-                    SendMessage(config["telegram"]["token"], config["telegram"]["chat_id"], "Wykryto nowe ogłoszenie <a href='https://vinted.pl" + rekord["path"] + "'>" + rekord["item_box"]["first_line"] + "</a> za " + rekord["price"]["amount"] + " " + rekord["price"]["currency_code"] )
-                    print("["+datetime.datetime.now().strftime('%d.%m.%Y %H:%M')+"] Wysłano do "+ str(config['telegram']['chat_id'])+" ogłoszenie o ID "+str(rekord['id']))
                 else:
-                    pass
+                    if (rekord["id"] not in items_handled):
+                        items_handled.append(rekord["id"])
+                        if len(items_handled) > 50:
+                            items_handled.pop(0)
+                        SendMessage(config["telegram"]["token"], config["telegram"]["chat_id"], "Wykryto nowe ogłoszenie <a href='https://vinted.pl" + rekord["path"] + "'>" + rekord["item_box"]["first_line"] + "</a> za " + rekord["price"]["amount"] + " " + rekord["price"]["currency_code"] )
+                        print("["+datetime.datetime.now().strftime('%d.%m.%Y %H:%M')+"] Wysłano do "+ str(config['telegram']['chat_id'])+" ogłoszenie o ID "+str(rekord['id']))
+                    else:
+                        pass
             
         except Exception:
             print("["+datetime.datetime.now().strftime('%d.%m.%Y %H:%M')+"] Wystąpił problem...")
